@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient } from '@utils-types';
 
 type TInitialStateBurgerConstructor = {
@@ -86,11 +86,7 @@ export const burgerConstructorSlice = createSlice({
   selectors: {
     selectConstructorIngredients: (state) => state.ingredients,
     selectBun: (state) => state.bun,
-    selectConstructorInfo: (state) => state,
-    selectConstructorForIngredients: (state) => ({
-      bun: state.bun,
-      ingredients: state.ingredients
-    })
+    selectConstructorInfo: (state) => state
   }
 });
 
@@ -104,6 +100,13 @@ export const {
 export const {
   selectConstructorIngredients,
   selectBun,
-  selectConstructorInfo,
-  selectConstructorForIngredients
+  selectConstructorInfo
 } = burgerConstructorSlice.selectors;
+
+export const selectConstructorForIngredients = createSelector(
+  [selectBun, selectConstructorIngredients],
+  (bun, ingredients) => ({
+    bun,
+    ingredients
+  })
+);
