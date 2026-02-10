@@ -5,8 +5,9 @@ import {
   useSelector as selectorHook
 } from 'react-redux';
 import { userSlice } from './user/slice';
+import { passwordSlice } from '@slices';
 
-const rootReducer = combineSlices(userSlice);
+const rootReducer = combineSlices(userSlice, passwordSlice);
 
 const store = configureStore({
   reducer: rootReducer,
