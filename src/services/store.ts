@@ -5,9 +5,18 @@ import {
   useSelector as selectorHook
 } from 'react-redux';
 import { userSlice } from './user/slice';
-import { passwordSlice } from '@slices';
+import {
+  burgerConstructorSlice,
+  ingredientsSlice,
+  passwordSlice
+} from '@slices';
 
-const rootReducer = combineSlices(userSlice, passwordSlice);
+const rootReducer = combineSlices(
+  userSlice,
+  passwordSlice,
+  ingredientsSlice,
+  burgerConstructorSlice
+);
 
 const store = configureStore({
   reducer: rootReducer,

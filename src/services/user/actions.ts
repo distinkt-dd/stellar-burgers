@@ -18,7 +18,7 @@ export const logout = createAsyncThunk('user/logout', async () =>
 
 export const update = createAsyncThunk(
   'user/update',
-  async (paylodad: TRegisterData) => burgerApi.updateUserApi(paylodad)
+  async (payload: TRegisterData) => burgerApi.updateUserApi(payload)
 );
 
 export const checkUserAuth = createAsyncThunk(

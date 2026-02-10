@@ -1,27 +1,38 @@
 import { getIngredients } from '@actions';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TIngredient } from '@utils-types';
 
 type TIngredientsInitialState = {
-  ingredients: TIngredient[] | null;
+  ingredients: TIngredient[] | undefined;
   isResponse: boolean;
+  currentIngredient: TIngredient | null;
   error: string | null;
 };
 
 const initialState: TIngredientsInitialState = {
-  ingredients: null,
+  ingredients: undefined,
   isResponse: false,
+  currentIngredient: null,
   error: null
 };
 
 export const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentIngredient: (state, action: PayloadAction<TIngredient>) => {
+      state.currentIngredient = action.payload;
+    },
+
+    deleteCurrentIngredient: (state) => {
+      state.currentIngredient = null;
+    }
+  },
   selectors: {
     selectIngredients: (state) => state.ingredients,
     selectIngredientsError: (state) => state.error,
-    selectIngredientsIsResponse: (state) => state.isResponse
+    selectIngredientsIsResponse: (state) => state.isResponse,
+    selectCurrentIngredient: (state) => state.currentIngredient
   },
   extraReducers: (builder) => {
     builder
@@ -43,5 +54,9 @@ export const ingredientsSlice = createSlice({
 export const {
   selectIngredients,
   selectIngredientsIsResponse,
-  selectIngredientsError
+  selectIngredientsError,
+  selectCurrentIngredient
 } = ingredientsSlice.selectors;
+
+export const { setCurrentIngredient, deleteCurrentIngredient } =
+  ingredientsSlice.actions;

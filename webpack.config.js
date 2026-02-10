@@ -57,7 +57,7 @@ module.exports = {
     new Dotenv()
   ],
   resolve: {
-  extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css', '.scss'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css', '.scss'],
     alias: {
       '@pages': path.resolve(__dirname, './src/pages'),
       '@components': path.resolve(__dirname, './src/components'),
@@ -71,7 +71,11 @@ module.exports = {
       '@store': path.resolve(__dirname, './src/services/store.ts'),
       '@actions': path.resolve(__dirname, './src/services/actions.index.ts'),
       '@slices': path.resolve(__dirname, './src/services/slices.index.ts'),
-      '@protected-route': path.resolve(__dirname, './src/components/protected-route')
+      '@protected-route': path.resolve(
+        __dirname,
+        './src/components/protected-route'
+      ),
+      '@utils-functions': path.resolve(__dirname, './src/utils/functions.ts')
     }
   },
   output: {
