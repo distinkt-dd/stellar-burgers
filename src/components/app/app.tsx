@@ -2,27 +2,24 @@ import { ConstructorPage } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
 
+import { checkUserAuth } from '@actions';
 import { AppHeader } from '@components';
-import { Route, Routes } from 'react-router-dom';
+import { useDispatch } from '@store';
 import { useEffect } from 'react';
-import { Preloader } from '@ui';
+import { Route, Routes } from 'react-router-dom';
 
 const App = () => {
-  useEffect(() => {}, []);
-  const isLoading = false;
-  const error = false;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(checkUserAuth());
+  }, []);
   return (
     <div className={styles.app}>
       <AppHeader />
-      {isLoading ? (
-        <Preloader />
-      ) : error ? (
-        <div>Error: {error}</div>
-      ) : (
-        <Routes>
-          <Route path='/' element={<ConstructorPage />} />
-        </Routes>
-      )}
+
+      <Routes>
+        <Route path='/' element={<ConstructorPage />} />
+      </Routes>
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import { setCookie, getCookie } from './cookie';
-import { TIngredient, TOrder, TOrdersData, TUser } from './types';
+import { deleteCookie, getCookie, setCookie } from './cookie';
+import { TIngredient, TOrder, TUser } from './types';
 
 const URL = process.env.BURGER_API_URL;
 
@@ -143,7 +143,7 @@ type TAuthResponse = TServerResponse<{
   user: TUser;
 }>;
 
-export const registerUserApi = (data: TRegisterData) =>
+export const registerUserApi = (data: TRegisterData): Promise<TAuthResponse> =>
   fetch(`${URL}/auth/register`, {
     method: 'POST',
     headers: {
@@ -162,7 +162,11 @@ export type TLoginData = {
   password: string;
 };
 
-export const loginUserApi = (data: TLoginData) =>
+export type TForgotPassword = {
+  email: string;
+};
+
+export const loginUserApi = (data: TLoginData): Promise<TAuthResponse> =>
   fetch(`${URL}/auth/login`, {
     method: 'POST',
     headers: {
@@ -172,11 +176,17 @@ export const loginUserApi = (data: TLoginData) =>
   })
     .then((res) => checkResponse<TAuthResponse>(res))
     .then((data) => {
-      if (data?.success) return data;
+      if (data?.success) {
+        setCookie('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+        return data;
+      }
       return Promise.reject(data);
     });
 
-export const forgotPasswordApi = (data: { email: string }) =>
+export const forgotPasswordApi = (
+  data: TForgotPassword
+): Promise<TServerResponse<{}>> =>
   fetch(`${URL}/password-reset`, {
     method: 'POST',
     headers: {
@@ -190,7 +200,14 @@ export const forgotPasswordApi = (data: { email: string }) =>
       return Promise.reject(data);
     });
 
-export const resetPasswordApi = (data: { password: string; token: string }) =>
+export type TResetPassword = {
+  password: string;
+  token: string;
+};
+
+export const resetPasswordApi = (
+  data: TResetPassword
+): Promise<TServerResponse<{}>> =>
   fetch(`${URL}/password-reset/reset`, {
     method: 'POST',
     headers: {
@@ -206,7 +223,7 @@ export const resetPasswordApi = (data: { password: string; token: string }) =>
 
 type TUserResponse = TServerResponse<{ user: TUser }>;
 
-export const getUserApi = () =>
+export const getUserApi = (): Promise<TUserResponse | null> =>
   fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
     headers: {
       authorization: getCookie('accessToken')
@@ -232,4 +249,32 @@ export const logoutApi = () =>
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken')
     })
-  }).then((res) => checkResponse<TServerResponse<{}>>(res));
+  })
+    .then((res) => checkResponse<TServerResponse<{}>>(res))
+    .then((data) => {
+      if (data?.success) {
+        localStorage.removeItem('refreshToken');
+        deleteCookie('accessToken');
+      } else {
+        localStorage.removeItem('refreshToken');
+        deleteCookie('accessToken');
+      }
+    });
+
+export const isTokenExists = () => (getCookie('accessToken') ? true : false);
+
+export const burgerApi = {
+  isTokenExists,
+  logoutApi,
+  loginUserApi,
+  registerUserApi,
+  updateUserApi,
+  forgotPasswordApi,
+  resetPasswordApi,
+  getIngredientsApi,
+  getFeedsApi,
+  getOrderByNumberApi,
+  getOrdersApi,
+  orderBurgerApi,
+  getUserApi
+};
