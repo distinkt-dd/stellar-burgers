@@ -1,4 +1,4 @@
-import { login, logout, register } from '@actions';
+import { login, logout, register, update } from '@actions';
 import { createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
 
@@ -54,17 +54,41 @@ export const userSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
         state.error = '';
+        state.isResponse = false;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.isResponse = false;
+        state.error = action.error.message as string;
+        state.user = null;
+      })
+      .addCase(logout.pending, (state) => {
+        state.isResponse = true;
       })
 
       .addCase(register.fulfilled, (state, actions) => {
         state.user = actions.payload.user;
         state.isAuthChecked = true;
+        state.error = '';
       })
       .addCase(register.rejected, (state, action) => {
         state.error = String(action.error.message);
         state.isAuthChecked = true;
+        state.isResponse = false;
       })
-      .addCase(register.rejected, (state) => {
+      .addCase(register.pending, (state) => {
+        state.isResponse = true;
+        state.error = '';
+      })
+
+      .addCase(update.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.isResponse = false;
+      })
+      .addCase(update.rejected, (state, action) => {
+        state.error = String(action.error.message);
+        state.isResponse = false;
+      })
+      .addCase(update.pending, (state) => {
         state.isResponse = true;
         state.error = '';
       });

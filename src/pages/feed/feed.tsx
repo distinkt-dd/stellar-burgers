@@ -7,13 +7,13 @@ import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
 
 export const Feed: FC = () => {
-  /** TODO: взять переменную из стора */
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(feedsGetAll());
-  }, []);
   const orders: TOrder[] | [] = useSelector(getFeedsOrders);
-
+  useEffect(() => {
+    if (!orders.length) {
+      dispatch(feedsGetAll());
+    }
+  }, []);
   if (!orders.length) {
     return <Preloader />;
   }

@@ -27,7 +27,7 @@ export const checkUserAuth = createAsyncThunk(
     if (burgerApi.isTokenExists()) {
       burgerApi
         .getUserApi()
-        .then((user) => dispatch(setUser(user)))
+        .then((user) => dispatch(setUser(user?.user)))
         .finally(() => dispatch(setIsAuthChecked(true)));
     } else {
       dispatch(setIsAuthChecked(true));

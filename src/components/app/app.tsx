@@ -10,14 +10,14 @@ import {
 import '../../index.css';
 import styles from './app.module.css';
 
-import { checkUserAuth, getIngredients } from '@actions';
+import { checkUserAuth, feedsGetAll, getIngredients } from '@actions';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
+import { ProtectedRoute } from '@protected-route';
+import { clearCurrentOrder, deleteCurrentIngredient } from '@slices';
 import { useDispatch } from '@store';
+import { utilsFunctions } from '@utils-functions';
 import { useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { clearCurrentOrder, deleteCurrentIngredient } from '@slices';
-import { utilsFunctions } from '@utils-functions';
-import { ProtectedRoute } from '@protected-route';
 
 const App = () => {
   const dispatch = useDispatch();

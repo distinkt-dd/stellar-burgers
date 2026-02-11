@@ -104,7 +104,7 @@ type TNewOrderResponse = TServerResponse<{
   name: string;
 }>;
 
-export const orderBurgerApi = (data: string[]) =>
+export const orderBurgerApi = (data: string[]): Promise<TNewOrderResponse> =>
   fetchWithRefresh<TNewOrderResponse>(`${URL}/orders`, {
     method: 'POST',
     headers: {
@@ -234,7 +234,9 @@ export const getUserApi = (): Promise<TUserResponse | null> =>
     } as HeadersInit
   });
 
-export const updateUserApi = (user: Partial<TRegisterData>) =>
+export const updateUserApi = (
+  user: Partial<TRegisterData>
+): Promise<TUserResponse> =>
   fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
     method: 'PATCH',
     headers: {

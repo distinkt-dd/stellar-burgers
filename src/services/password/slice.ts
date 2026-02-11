@@ -33,11 +33,12 @@ export const passwordSlice = createSlice({
       })
 
       .addCase(reset.fulfilled, (state) => {
-        (state.isResponse = false), (state.error = null);
+        state.isResponse = false;
+        state.error = null;
       })
       .addCase(reset.rejected, (state, action) => {
-        (state.isResponse = false),
-          (state.error = String(action.error.message));
+        state.isResponse = false;
+        state.error = String(action.error.message);
       })
       .addCase(reset.pending, (state) => {
         state.isResponse = true;
