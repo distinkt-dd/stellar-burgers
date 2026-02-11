@@ -9,11 +9,7 @@ import { FC, useEffect } from 'react';
 export const Feed: FC = () => {
   const dispatch = useDispatch();
   const orders: TOrder[] | [] = useSelector(getFeedsOrders);
-  useEffect(() => {
-    if (!orders.length) {
-      dispatch(feedsGetAll());
-    }
-  }, []);
+
   if (!orders.length) {
     return <Preloader />;
   }

@@ -1,5 +1,5 @@
-import { feedsGetAll, feedsOrderByNumber } from '@actions';
-import { createSlice } from '@reduxjs/toolkit';
+import { feedsGetAll } from '@actions';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
 type TFeedTotal = {
@@ -28,8 +28,8 @@ export const feedsSlice = createSlice({
   name: 'feeds',
   initialState,
   reducers: {
-    clearCurrentOrder: (state) => {
-      state.currentOrder = null;
+    setCurrentOrder: (state, action: PayloadAction<TOrder>) => {
+      state.currentOrder = action.payload;
     }
   },
   selectors: {
@@ -37,7 +37,7 @@ export const feedsSlice = createSlice({
     getFeedsTotal: (state) => state.feed.total,
     getFeedsTotalToday: (state) => state.feed.totalToday,
     getFeed: (state) => state.feed,
-    getCurrent: (state) => state.currentOrder
+    getCurrentOrder: (state) => state.currentOrder
   },
   extraReducers: (builder) => {
     builder
@@ -53,10 +53,6 @@ export const feedsSlice = createSlice({
       })
       .addCase(feedsGetAll.rejected, (state, action) => {
         state.error = String(action.error.message);
-      })
-
-      .addCase(feedsOrderByNumber.fulfilled, (state, action) => {
-        state.currentOrder = action.payload.orders[0];
       });
   }
 });
@@ -66,7 +62,7 @@ export const {
   getFeedsOrders,
   getFeedsTotal,
   getFeedsTotalToday,
-  getCurrent
+  getCurrentOrder
 } = feedsSlice.selectors;
 
-export const { clearCurrentOrder } = feedsSlice.actions;
+export const { setCurrentOrder } = feedsSlice.actions;

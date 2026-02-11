@@ -4,6 +4,7 @@ import {
   ForgotPassword,
   Login,
   Profile,
+  ProfileOrders,
   Register,
   ResetPassword
 } from '@pages';
@@ -13,7 +14,7 @@ import styles from './app.module.css';
 import { checkUserAuth, feedsGetAll, getIngredients } from '@actions';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { ProtectedRoute } from '@protected-route';
-import { clearCurrentOrder, deleteCurrentIngredient } from '@slices';
+import { deleteCurrentIngredient } from '@slices';
 import { useDispatch } from '@store';
 import { utilsFunctions } from '@utils-functions';
 import { useEffect } from 'react';
@@ -27,6 +28,7 @@ const App = () => {
   useEffect(() => {
     dispatch(checkUserAuth());
     dispatch(getIngredients());
+    dispatch(feedsGetAll());
   }, []);
   return (
     <div className={styles.app}>
@@ -35,7 +37,9 @@ const App = () => {
       <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/ingredients/:id' element={<ConstructorPage />} />
+        <Route path='/profile/orders/:number' element={<ProfileOrders />} />
         <Route path='/feed' element={<Feed />} />
+        <Route path='/feed/:number' element={<Feed />} />
         <Route
           path='/profile'
           element={
@@ -76,6 +80,14 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path='/profile/orders'
+          element={
+            <ProtectedRoute>
+              <ProfileOrders />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       {background && (
@@ -99,19 +111,17 @@ const App = () => {
             }
           />
           <Route
+            path='/profile/orders/:number'
+            element={
+              <Modal title='' onClose={() => navigate(-1)}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
             path='/feed/:number'
             element={
-              <Modal
-                title=''
-                onClose={() =>
-                  utilsFunctions.onCloseModal(
-                    dispatch,
-                    clearCurrentOrder,
-                    navigate,
-                    -1
-                  )
-                }
-              >
+              <Modal title='' onClose={() => navigate(-1)}>
                 <OrderInfo />
               </Modal>
             }

@@ -3,11 +3,11 @@ import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useSelector } from 'react-redux';
-import { getCurrent, selectIngredients } from '@slices';
+import { getCurrentOrder, selectIngredients } from '@slices';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = useSelector(getCurrent);
+  const orderData = useSelector(getCurrentOrder);
 
   const ingredients: TIngredient[] = useSelector(selectIngredients) || [];
 

@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import { FC, memo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   CurrencyIcon,
@@ -9,23 +9,30 @@ import styles from './order-card.module.css';
 
 import { OrderCardUIProps } from './type';
 import { OrderStatus } from '@components';
-import { useDispatch, useSelector } from '@store';
-import { getCurrent } from '@slices';
-import { feedsOrderByNumber } from '@actions';
+import { useDispatch } from '@store';
+import { setCurrentOrder } from '@slices';
 
 export const OrderCardUI: FC<OrderCardUIProps> = memo(
   ({ orderInfo, maxIngredients, locationState }) => {
+    const {
+      ingredientsInfo,
+      ingredientsToShow,
+      remains,
+      total,
+      date,
+      ...orderData
+    } = orderInfo;
     const dispatch = useDispatch();
-    const clickOnLink = () => {
-      dispatch(feedsOrderByNumber(orderInfo.number));
-    }; // тут;
+    const handleClick = () => {
+      dispatch(setCurrentOrder(orderData));
+    };
     return (
       <Link
         to={orderInfo.number.toString()}
         relative='path'
         state={locationState}
         className={`p-6 mb-4 mr-2 ${styles.order}`}
-        onClick={clickOnLink}
+        onClick={handleClick}
       >
         <div className={styles.order_info}>
           <span className={`text text_type_digits-default ${styles.number}`}>

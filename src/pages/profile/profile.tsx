@@ -33,6 +33,13 @@ export const Profile: FC = () => {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(update(formValue));
+    if (user) {
+      setFormValue({
+        password: '',
+        name: user?.name || '',
+        email: user?.email || ''
+      });
+    }
   };
 
   const handleCancel = (e: SyntheticEvent) => {

@@ -4,3 +4,4 @@ export * from './ingredients/slice';
 export * from './order/slice';
 export * from './password/slice';
 export * from './user/slice';
+export * from './profile-orders/slice';

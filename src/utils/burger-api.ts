@@ -87,7 +87,7 @@ export const getFeedsApi = (): Promise<TFeedsResponse> =>
       return Promise.reject(data);
     });
 
-export const getOrdersApi = () =>
+export const getOrdersApi = (): Promise<TOrder[]> =>
   fetchWithRefresh<TFeedsResponse>(`${URL}/orders`, {
     method: 'GET',
     headers: {
