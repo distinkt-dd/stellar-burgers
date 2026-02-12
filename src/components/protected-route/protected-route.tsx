@@ -1,5 +1,5 @@
 import { selectIsAuthChecked, selectUser } from '@slices';
-import { useSelector } from '@store';
+import { useDispatch, useSelector } from '@store';
 import { Preloader } from '@ui';
 import { Navigate, useLocation } from 'react-router-dom';
 
@@ -26,7 +26,6 @@ export const ProtectedRoute = ({
 
   if (onlyUnAuth && user) {
     const { from } = location.state ?? { from: { pathname: '/' } };
-
     return <Navigate to={from} />;
   }
 

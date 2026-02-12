@@ -81,6 +81,11 @@ export const burgerConstructorSlice = createSlice({
         state.ingredients[indexIng + 1] = temp;
       }
       saveToLocalStorage(state);
+    },
+    clearConstructor: (state) => {
+      state.bun = null;
+      state.ingredients = [];
+      saveToLocalStorage(state);
     }
   },
   selectors: {
@@ -95,7 +100,8 @@ export const {
   addBun,
   removeConstructorIngredient,
   moveIngredientDown,
-  moveIngredientUp
+  moveIngredientUp,
+  clearConstructor
 } = burgerConstructorSlice.actions;
 export const {
   selectConstructorIngredients,

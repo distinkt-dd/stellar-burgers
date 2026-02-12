@@ -3,13 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
 type TOrdersResponseInitialState = {
-  orders: TOrder[] | null;
+  orders: TOrder[] | [];
   isResponse: boolean;
   currentOrder: TOrder | null;
 };
 
 const initialState: TOrdersResponseInitialState = {
-  orders: null,
+  orders: [],
   isResponse: false,
   currentOrder: null
 };
