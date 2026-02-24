@@ -3,7 +3,8 @@ describe('Добавление ингредиентов из списка в к�
     cy.intercept('GET', '/api/ingredients', { fixture: 'ingredients.json' }).as(
       'getIngredients'
     );
-    cy.visit('http://localhost:4000');
+    cy.visit('/');
+    cy.wait('@getIngredients');
   });
 
   it('Добавляем булку в конструктор', () => {

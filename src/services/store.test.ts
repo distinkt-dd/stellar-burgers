@@ -1,16 +1,25 @@
 import { rootReducer, type RootState } from '@store';
+import {
+  initialState,
+  passwordInitialState,
+  orderInitialState,
+  ordersInitialState,
+  ingredientsInitialState,
+  feedsInitialState,
+  burgerConstructorInitialState
+} from '@slices';
 
 describe('Тесты над root reducer', () => {
   it('Должен правильно инициализироваться', () => {
-    const initialState: RootState = rootReducer(undefined, { type: '' });
-    expect(initialState).toEqual({
-      user: expect.any(Object),
-      ingredients: expect.any(Object),
-      password: expect.any(Object),
-      order: expect.any(Object),
-      'profile-orders': expect.any(Object),
-      'burger-constructor': expect.any(Object),
-      feeds: expect.any(Object)
-    } as RootState);
+    const initialStateReducer: RootState = rootReducer(undefined, { type: '' });
+    expect(initialStateReducer.user).toEqual(initialState);
+    expect(initialStateReducer.password).toEqual(passwordInitialState);
+    expect(initialStateReducer.order).toEqual(orderInitialState);
+    expect(initialStateReducer['profile-orders']).toEqual(ordersInitialState);
+    expect(initialStateReducer.ingredients).toEqual(ingredientsInitialState);
+    expect(initialStateReducer.feeds).toEqual(feedsInitialState);
+    expect(initialStateReducer['burger-constructor']).toEqual(
+      burgerConstructorInitialState
+    );
   });
 });

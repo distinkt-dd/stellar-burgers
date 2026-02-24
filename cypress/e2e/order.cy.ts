@@ -12,7 +12,7 @@ describe('Тесты создания заказа', () => {
 
     window.localStorage.setItem('refreshToken', 'test-refresh');
     cy.setCookie('accessToken', 'test-access');
-    cy.visit('http://localhost:4000');
+    cy.visit('/');
     cy.wait('@getIngredients');
     cy.wait('@getUser');
   });

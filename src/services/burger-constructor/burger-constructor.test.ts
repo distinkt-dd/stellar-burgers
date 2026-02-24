@@ -9,6 +9,12 @@ import {
 
 import { TConstructorIngredient } from '@utils-types';
 
+// Тип для состояния слайса
+type BurgerConstructorState = {
+  bun: TConstructorIngredient | null;
+  ingredients: TConstructorIngredient[];
+};
+
 // Мокаем localStorage
 const localStorageMock = (() => {
   let store: Record<string, string> = {};
@@ -33,7 +39,7 @@ describe('Тест слайса burgerConstructor', () => {
 
   const { reducer } = burgerConstructorSlice;
 
-  const getInitialState = () => ({
+  const getInitialState = (): BurgerConstructorState => ({
     bun: null,
     ingredients: []
   });
@@ -159,7 +165,7 @@ describe('Тест слайса burgerConstructor', () => {
   });
 
   describe('Тест экшена изменения порядка ингредиентов', () => {
-    let stateWithIngredients: any;
+    let stateWithIngredients: BurgerConstructorState;
 
     beforeEach(() => {
       let state = reducer(
@@ -182,6 +188,7 @@ describe('Тест слайса burgerConstructor', () => {
     test('Должен переместить ингредиент вверх', () => {
       expect(stateWithIngredients.ingredients[0].id).toBe(mockIngredient1.id);
       expect(stateWithIngredients.ingredients[1].id).toBe(mockIngredient2.id);
+
       const newState = reducer(
         stateWithIngredients,
         moveIngredientUp(mockIngredient2.id)

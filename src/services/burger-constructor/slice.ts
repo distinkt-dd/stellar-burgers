@@ -1,7 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient } from '@utils-types';
 
-type TInitialStateBurgerConstructor = {
+export type TInitialStateBurgerConstructor = {
   bun: TConstructorIngredient | null;
   ingredients: TConstructorIngredient[];
 };
@@ -116,3 +116,5 @@ export const selectConstructorForIngredients = createSelector(
     ingredients
   })
 );
+
+export const burgerConstructorInitialState = initialState;
