@@ -14,7 +14,7 @@ import {
 } from 'react-redux';
 import { userSlice } from './user/slice';
 
-const rootReducer = combineSlices(
+export const rootReducer = combineSlices(
   userSlice,
   passwordSlice,
   ingredientsSlice,

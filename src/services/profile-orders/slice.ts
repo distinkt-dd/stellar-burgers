@@ -43,3 +43,5 @@ export const {
   selectProfileOrders,
   selectProfileOrdersIsResponse
 } = ordersSlice.selectors;
+
+export const ordersInitialState = initialState;
