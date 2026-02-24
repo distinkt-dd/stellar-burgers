@@ -66,3 +66,4 @@ export const {
 } = feedsSlice.selectors;
 
 export const { setCurrentOrder } = feedsSlice.actions;
+export const feedsInitialState = initialState;

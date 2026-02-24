@@ -21,6 +21,7 @@ export const orderSlice = createSlice({
     clearOrderModalData: (state) => {
       state.orderRequest = false;
       state.order = null;
+      state.name = null;
     }
   },
   selectors: {
@@ -48,3 +49,4 @@ export const { selectNewOrder, selectNewOrderName, selectNewOrderRequest } =
   orderSlice.selectors;
 
 export const { clearOrderModalData } = orderSlice.actions;
+export const orderInitialState = initialState;

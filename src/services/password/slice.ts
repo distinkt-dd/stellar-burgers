@@ -48,3 +48,5 @@ export const passwordSlice = createSlice({
 
 export const { selectPasswordError, selectIsResponse } =
   passwordSlice.selectors;
+
+export const passwordInitialState = initialState;

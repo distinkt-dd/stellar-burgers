@@ -60,3 +60,5 @@ export const {
 
 export const { setCurrentIngredient, deleteCurrentIngredient } =
   ingredientsSlice.actions;
+
+export const ingredientsInitialState = initialState;
